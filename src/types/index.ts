@@ -24,4 +24,30 @@ export interface PokerState {
   gameStatus: 'betting' | 'preFlop' | 'flop' | 'turn' | 'river' | 'showdown'
   chips: number
   currentBet: number
+}
+
+export interface Player {
+  id: string
+  name: string
+  chips: number
+  cards: Card[]
+  bet: number
+  folded: boolean
+  isComputer: boolean
+}
+
+export interface GameState {
+  pot: number
+  currentBet: number
+  round: 'preflop' | 'flop' | 'turn' | 'river' | 'showdown'
+  currentPlayer: string
+  lastAction?: 'bet' | 'call' | 'raise' | 'fold' | 'check'
+  minBet: number
+  result?: string
+}
+
+export interface HandResult {
+  rank: number
+  name: string
+  cards: Card[]
 } 
