@@ -208,7 +208,6 @@ button:hover {
 .game-status {
   color: white;
   font-size: 1.1rem;
-  min-width: 200px;
 }
 
 .controls {
