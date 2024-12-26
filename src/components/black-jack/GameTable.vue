@@ -1,77 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { Button } from "ant-design-vue";
-import type { GameState } from "@/types";
-import { createDeck, calculateHandValue } from "@/utils/game";
-import Card from "@/components/common/Card.vue";
-
-const gameState = ref<GameState>({
-  deck: [],
-  playerHand: [],
-  dealerHand: [],
-  gameStatus: "betting",
-});
-
-const startNewGame = () => {
-  gameState.value = {
-    deck: createDeck(),
-    playerHand: [],
-    dealerHand: [],
-    gameStatus: "playing",
-  };
-
-  // 发初始牌
-  dealCard("player");
-  dealCard("dealer");
-  dealCard("player");
-  dealCard("dealer");
-};
-
-const dealCard = (target: "player" | "dealer") => {
-  const card = gameState.value.deck.pop();
-  if (card) {
-    if (target === "player") {
-      gameState.value.playerHand.push(card);
-    } else {
-      gameState.value.dealerHand.push(card);
-    }
-  }
-};
-
-const hit = () => {
-  dealCard("player");
-  const playerValue = calculateHandValue(gameState.value.playerHand);
-  if (playerValue > 21) {
-    gameState.value.gameStatus = "playerBust";
-  }
-};
-
-const stand = () => {
-  while (calculateHandValue(gameState.value.dealerHand) < 17) {
-    dealCard("dealer");
-  }
-
-  const playerValue = calculateHandValue(gameState.value.playerHand);
-  const dealerValue = calculateHandValue(gameState.value.dealerHand);
-
-  if (dealerValue > 21) {
-    gameState.value.gameStatus = "dealerBust";
-  } else if (dealerValue > playerValue) {
-    gameState.value.gameStatus = "dealerWin";
-  } else if (playerValue > dealerValue) {
-    gameState.value.gameStatus = "playerWin";
-  } else {
-    gameState.value.gameStatus = "push";
-  }
-};
+const { gameState, startNewGame, hit, stand } = useBlackjack()
 
 const emit = defineEmits<{
-  (e: "backToMenu"): void;
-}>();
+  (e: 'backToMenu'): void
+}>()
 
 onMounted(() => {
-  startNewGame();
-});
+  startNewGame()
+})
 </script>
 
 <template>

@@ -1,72 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { Button } from "ant-design-vue";
-import type { Card, PokerState } from "@/types";
-import { createDeck } from "@/utils/game";
-import CardComponent from "@/components/common/Card.vue";
+const { gameState, startNewGame, dealCommunityCards, fold } = usePoker()
 
 const emit = defineEmits<{
-  (e: "backToMenu"): void;
-}>();
-
-const gameState = ref<PokerState>({
-  deck: [],
-  playerHand: [],
-  communityCards: [],
-  gameStatus: "betting",
-  chips: 1000,
-  currentBet: 0,
-});
-
-const startNewGame = () => {
-  gameState.value = {
-    deck: createDeck(),
-    playerHand: [],
-    communityCards: [],
-    gameStatus: "preFlop",
-    chips: 1000,
-    currentBet: 0,
-  };
-
-  // 发两张底牌
-  dealPlayerCards();
-};
-
-const dealPlayerCards = () => {
-  gameState.value.playerHand = [gameState.value.deck.pop()!, gameState.value.deck.pop()!];
-};
-
-const dealCommunityCards = () => {
-  switch (gameState.value.gameStatus) {
-    case "preFlop":
-      // 发三张公共牌
-      gameState.value.communityCards = [
-        gameState.value.deck.pop()!,
-        gameState.value.deck.pop()!,
-        gameState.value.deck.pop()!,
-      ];
-      gameState.value.gameStatus = "flop";
-      break;
-    case "flop":
-      // 发转牌
-      gameState.value.communityCards.push(gameState.value.deck.pop()!);
-      gameState.value.gameStatus = "turn";
-      break;
-    case "turn":
-      // 发河牌
-      gameState.value.communityCards.push(gameState.value.deck.pop()!);
-      gameState.value.gameStatus = "river";
-      break;
-  }
-};
-
-const fold = () => {
-  startNewGame();
-};
+  (e: 'backToMenu'): void
+}>()
 
 onMounted(() => {
-  startNewGame();
-});
+  startNewGame()
+})
 </script>
 
 <template>
@@ -86,7 +27,7 @@ onMounted(() => {
       <div class="mb-8">
         <h2 class="text-xl text-gray-800 font-medium mb-4">公共牌</h2>
         <div class="flex gap-4 justify-center">
-          <CardComponent
+          <Card
             v-for="(card, index) in gameState.communityCards"
             :key="index"
             :card="card"
@@ -98,7 +39,7 @@ onMounted(() => {
       <div class="mb-8">
         <h2 class="text-xl text-gray-800 font-medium mb-4">你的手牌</h2>
         <div class="flex gap-4 justify-center">
-          <CardComponent
+          <Card
             v-for="(card, index) in gameState.playerHand"
             :key="index"
             :card="card"
