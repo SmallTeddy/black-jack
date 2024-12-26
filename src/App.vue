@@ -1,11 +1,32 @@
 <script setup lang="ts">
-import GameTable from './components/GameTable.vue'
+import { ref } from 'vue'
+import type { GameType } from './types'
+import Menu from './components/Menu.vue'
+import BlackjackTable from './components/blackjack/GameTable.vue'
+import PokerTable from './components/poker/GameTable.vue'
+
+const currentGame = ref<GameType>('menu')
+
+const selectGame = (game: 'blackjack' | 'poker') => {
+  currentGame.value = game
+}
+
+const backToMenu = () => {
+  currentGame.value = 'menu'
+}
 </script>
 
 <template>
   <div class="min-h-screen bg-[#306339] p-4">
-    <h1 class="text-3xl font-bold mb-8 text-center text-white tracking-wide">21点游戏</h1>
-    <GameTable />
+    <h1 class="text-3xl font-bold mb-8 text-center text-white tracking-wide">
+      {{ currentGame === 'menu' ? '扑克游戏' : currentGame === 'blackjack' ? '21点' : '德州扑克' }}
+    </h1>
+    
+    <component
+      :is="currentGame === 'menu' ? Menu : currentGame === 'blackjack' ? BlackjackTable : PokerTable"
+      @select-game="selectGame"
+      @back-to-menu="backToMenu"
+    />
   </div>
 </template>
 
