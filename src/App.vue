@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { GameType } from './types'
-import Menu from './components/Menu.vue'
-import BlackjackTable from './components/blackjack/GameTable.vue'
-import PokerTable from './components/poker/GameTable.vue'
+import type { GameType } from '@/types'
+import Menu from '@/components/common/Menu.vue'
+import BlackjackTable from '@/components/black-jack/GameTable.vue'
+import PokerTable from '@/components/texas-poker/GameTable.vue'
 
 const currentGame = ref<GameType>('menu')
 

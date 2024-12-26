@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { Button } from "ant-design-vue";
-import type { Card, PokerState } from "../../types";
-import { createDeck } from "../../utils/game";
-import CardComponent from "../Card.vue";
+import type { Card, PokerState } from "@/types";
+import { createDeck } from "@/utils/game";
+import CardComponent from "@/components/common/Card.vue";
 
 const emit = defineEmits<{
   (e: "backToMenu"): void;
@@ -63,6 +63,10 @@ const dealCommunityCards = () => {
 const fold = () => {
   startNewGame();
 };
+
+onMounted(() => {
+  startNewGame();
+});
 </script>
 
 <template>

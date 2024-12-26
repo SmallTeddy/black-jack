@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { Button } from "ant-design-vue";
-import type { GameState } from "../../types";
-import { createDeck, calculateHandValue } from "../../utils/game";
-import Card from "../Card.vue";
+import type { GameState } from "@/types";
+import { createDeck, calculateHandValue } from "@/utils/game";
+import Card from "@/components/common/Card.vue";
 
 const gameState = ref<GameState>({
   deck: [],
