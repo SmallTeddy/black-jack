@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import path from 'path'
@@ -7,12 +7,10 @@ import Components from 'unplugin-vue-components/vite'
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 import VueMacros from 'unplugin-vue-macros/vite'
 
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd())
-  const isProd = mode === 'production'
+export default defineConfig(() => {
 
   return {
-    base: env.VITE_BASE_URL || '/poker-games/',
+    base: './',
     plugins: [
       VueMacros({
         plugins: {
@@ -38,31 +36,24 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       cssCodeSplit: true,
-      sourcemap: !isProd,
       minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: isProd,
-          drop_debugger: isProd,
-        }
-      },
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            // 第三方库
-            if (id.includes('node_modules')) {
-              if (id.includes('vue') || id.includes('@vueuse')) {
-                return 'vendor-vue'
-              }
-              if (id.includes('ant-design-vue')) {
-                return 'vendor-antd'
-              }
-              return 'vendors'
+    },
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // 第三方库
+          if (id.includes('node_modules')) {
+            if (id.includes('vue') || id.includes('@vueuse')) {
+              return 'vendor-vue'
             }
-            // 游戏逻辑
-            if (id.includes('composables') || id.includes('utils')) {
-              return 'game-logic'
+            if (id.includes('ant-design-vue')) {
+              return 'vendor-antd'
             }
+            return 'vendors'
+          }
+          // 游戏逻辑
+          if (id.includes('composables') || id.includes('utils')) {
+            return 'game-logic'
           }
         }
       }
