@@ -8,7 +8,6 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 import VueMacros from 'unplugin-vue-macros/vite'
 
 export default defineConfig(() => {
-
   return {
     base: './',
     plugins: [
@@ -37,23 +36,21 @@ export default defineConfig(() => {
     build: {
       cssCodeSplit: true,
       minify: 'terser',
-    },
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          // 第三方库
-          if (id.includes('node_modules')) {
-            if (id.includes('vue') || id.includes('@vueuse')) {
-              return 'vendor-vue'
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('vue') || id.includes('@vueuse')) {
+                return 'vendor-vue'
+              }
+              if (id.includes('ant-design-vue')) {
+                return 'vendor-antd'
+              }
+              return 'vendors'
             }
-            if (id.includes('ant-design-vue')) {
-              return 'vendor-antd'
+            if (id.includes('composables') || id.includes('utils')) {
+              return 'game-logic'
             }
-            return 'vendors'
-          }
-          // 游戏逻辑
-          if (id.includes('composables') || id.includes('utils')) {
-            return 'game-logic'
           }
         }
       }
