@@ -20,6 +20,7 @@
     "@types/node": "^20.0.0",
     "@vitejs/plugin-vue": "^5.0.0",
     "gh-pages": "^6.1.0",
+    "terser": "^5.27.0",
     "typescript": "^5.0.0",
     "unocss": "^0.58.0",
     "unplugin-auto-import": "^0.17.3",

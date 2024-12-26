@@ -26,3 +26,7 @@ dist-ssr
 # Auto-generated files
 src/auto-imports.d.ts
 src/components.d.ts
+
+# Environment files
+.env.local
+.env.*.local
