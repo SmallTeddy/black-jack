@@ -7,7 +7,11 @@ import Components from 'unplugin-vue-components/vite'
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 import VueMacros from 'unplugin-vue-macros/vite'
 
+// 获取仓库名称，用于 GitHub Pages 部署
+const repoName = 'poker-games'
+
 export default defineConfig({
+  base: `/${repoName}/`,
   plugins: [
     VueMacros({
       plugins: {

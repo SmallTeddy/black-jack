@@ -110,3 +110,24 @@ SmallTeddy
 - [Ant Design Vue](https://antdv.com/)
 - [UnoCSS](https://github.com/unocss/unocss)
 
+## 部署
+
+项目使用 GitHub Pages 进行部署。
+
+### 手动部署
+
+```bash
+# 构建并部署到 GitHub Pages
+npm run deploy
+```
+
+### 自动部署
+
+项目配置了 GitHub Actions，当推送到 main 分支时会自动部署到 GitHub Pages。
+
+### 访问地址
+
+在部署完成后，可以通过以下地址访问：
+
+https://smallteddy.github.io/poker-games/
+
