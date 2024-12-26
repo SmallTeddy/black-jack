@@ -4,7 +4,9 @@
 
 ## 预览
 
-![游戏预览](./preview.png)
+| 21点 | 德州扑克 |
+|:---:|:---:|
+| ![21点预览](./assets/black-jack-preview.png) | ![德州扑克预览](./assets/texas-poker-preview.png) |
 
 ## 特性
 
